@@ -63,7 +63,40 @@ class Locadora {
   }
 }
 
-class Filme {
+class Titulo {
+  constructor(titulo, categoria) {
+    this.titulo = titulo;
+    this.categoria = categoria;
+  }
+
+  custoIndividual(diasAlugado) {
+    return; // número
+  }
+}
+
+class Jogo extends Titulo {
+  constructor(titulo, categoria, console) {
+    super(titulo, categoria);
+    this.console = console;
+  }
+
+  custoIndividual(diasAlugado) {
+    // ERRADO
+    // como não retorna um número, não pode ser usado
+    // nos mesmos lugares que titulo.custoIndividual()
+
+    console.log(`Seu custo total é: ${total}`);
+    // new Titulo().custoIndividual(4) // 20
+    // new Filme().custoIndividual(4) // 35
+    // new Jogo().custoIndividual(4) // void
+
+    // CERTO
+    // também retorna um número que podemos somar no total
+    return total; //número
+  }
+}
+
+class Filme extends Titulo {
   constructor(titulo, categoria) {
     this.titulo = titulo;
     this.categoria = categoria;
@@ -73,7 +106,7 @@ class Filme {
     this.categoria = novaCategoria;
   }
 
-  custoTotalPorFilme(diasAlugado) {
+  custoIndividual(diasAlugado) {
     return (
       this.custoTempoPadrao(diasAlugado) + this.custoTempoExtra(diasAlugado)
     );
@@ -99,13 +132,13 @@ class Cliente {
 class Aluguel {
   constructor(qtdDias) {
     this.qtdDias = qtdDias;
-    this.filmesAlugados = [];
+    this.titulosAlugados = [];
     this.custoTotal = 0;
   }
 
-  alugarFilme(filme) {
-    this.filmesAlugados.push(filme);
-    this.custoTotal += filme.custoTotalPorFilme(this.dias);
+  alugar(titulo) {
+    this.titulosAlugados.push(titulo);
+    this.custoTotal += titulo.custoIndividual();
   }
 }
 

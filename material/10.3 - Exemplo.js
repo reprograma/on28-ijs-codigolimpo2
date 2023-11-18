@@ -63,7 +63,27 @@ class Locadora {
   }
 }
 
-class Filme {
+class Titulo {
+  constructor(titulo, categoria) {
+    this.titulo = titulo;
+    this.categoria = categoria;
+  }
+
+  custoIndividual(diasAlugado) {}
+}
+
+class Jogo extends Titulo {
+  constructor(titulo, categoria, console) {
+    super(titulo, categoria);
+    this.console = console;
+  }
+
+  custoIndividual(diasAlugado) {
+    // código
+  }
+}
+
+class Filme extends Titulo {
   constructor(titulo, categoria) {
     this.titulo = titulo;
     this.categoria = categoria;
@@ -73,7 +93,7 @@ class Filme {
     this.categoria = novaCategoria;
   }
 
-  custoTotalPorFilme(diasAlugado) {
+  custoIndividual(diasAlugado) {
     return (
       this.custoTempoPadrao(diasAlugado) + this.custoTempoExtra(diasAlugado)
     );
@@ -99,13 +119,13 @@ class Cliente {
 class Aluguel {
   constructor(qtdDias) {
     this.qtdDias = qtdDias;
-    this.filmesAlugados = [];
+    this.titulosAlugados = [];
     this.custoTotal = 0;
   }
 
-  alugarFilme(filme) {
-    this.filmesAlugados.push(filme);
-    this.custoTotal += filme.custoTotalPorFilme(this.dias);
+  alugar(titulo) {
+    this.titulosAlugados.push(titulo);
+    this.custoTotal += titulo.custoIndividual();
   }
 }
 

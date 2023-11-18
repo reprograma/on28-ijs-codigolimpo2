@@ -1,6 +1,6 @@
-var Aluguel = function () {};
+var AluguelOriginal = function () {};
 
-Aluguel.prototype.resumo = function (cliente) {
+AluguelOriginal.prototype.resumo = function (cliente) {
   var filmes = {
     F001: { titulo: "Ran", codigo: "regular" },
     F002: { titulo: "Trois Couleurs: Bleu", codigo: "regular" },
@@ -51,69 +51,81 @@ Aluguel.prototype.resumo = function (cliente) {
 };
 
 // EXERCÍCIO EM SALA
+// Exemplo em TS
 
-class Locadora {
-  constructor() {
-    this.catalogo = [];
-  }
+type Aluguel = {};
 
-  adicionarFilme(titulo, categoria) {
-    const novoFilme = new Filme(titulo, categoria);
-    this.catalogo.push(novoFilme);
-  }
+interface Alugavel {
+  titulo: string;
+  categoria: string;
+  custoTotal: (number) => number;
 }
 
-class Filme {
+class Filme implements Alugavel {
   constructor(titulo, categoria) {
     this.titulo = titulo;
     this.categoria = categoria;
   }
 
-  mudarCategoria(novaCategoria) {
-    this.categoria = novaCategoria;
+  custoTotal(dias: number) {
+    // viva suas aventuras
+    return dias;
   }
 
-  custoTotalPorFilme(diasAlugado) {
-    return (
-      this.custoTempoPadrao(diasAlugado) + this.custoTempoExtra(diasAlugado)
-    );
-  }
-
-  custoTempoPadrao() {
-    return custoTotal - totalDesconto;
-  }
-
-  custoTempoExtra() {}
-
-  calcular;
-}
-
-class Cliente {
-  constructor(nome) {
-    this.nome = nome;
-    this.pontosFidelidade = 0;
-    this.historicoAlugueis = [];
+  logarNomeDoFilme() {
+    console.log(this.titulo);
   }
 }
 
-class Aluguel {
-  constructor(qtdDias) {
-    this.qtdDias = qtdDias;
-    this.filmesAlugados = [];
-    this.custoTotal = 0;
+class Jogo implements Alugavel {}
+
+class Locadora {
+  catalogo: Array<Alugavel>;
+
+  constructor() {
+    this.catalogo = [];
   }
 
-  alugarFilme(filme) {
-    this.filmesAlugados.push(filme);
-    this.custoTotal += filme.custoTotalPorFilme(this.dias);
+  adicionarAoCatalogo(midia: Alugavel) {
+    this.catalogo.push(midia);
   }
 }
 
-class Categoria {
-  constructor(nome, qtdDiasPadrao, valorDiasPadrao, valorDiasExtra) {
-    this.nome = nome;
-    this.qtdDiasPadrao = qtdDiasPadrao;
-    this.valorDiasPadrao = valorDiasPadrao;
-    this.valorDiasExtra = valorDiasExtra;
+const gameStop = new Locadora();
+
+const obj = {
+  titulo: "",
+  categoria: "string",
+  custoTotal: (dias: number) => 100,
+};
+
+gameStop.adicionarAoCatalogo(obj);
+
+interface Veiculo {
+  placa: string;
+  ano: number;
+}
+
+class Concessionaria {
+  acervo: Array<Veiculo>;
+}
+
+class Moto implements Veiculo {
+  placa: string;
+  ano: number;
+
+  constructor(placa, ano) {
+    this.placa = placa;
+    this.ano = ano;
+  }
+}
+
+class Carro implements Veiculo {
+  placa: string;
+  ano: number;
+
+  constructor(placa, ano) {
+    this.placa = placa;
+    this.ano = ano;
   }
 }
