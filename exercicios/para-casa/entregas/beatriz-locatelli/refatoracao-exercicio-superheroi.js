@@ -81,7 +81,6 @@ class Vilao extends Personagem {
 
 class Confronto {
 
-
     lutar(heroi, vilao) {
         let resultadoHeroiVencedor = heroi.poderTotal() > vilao.poderTotal()
         let resultadoEmpate = heroi.poderTotal() == vilao.poderTotal()
@@ -112,7 +111,7 @@ console.log(heroi1.nomeVidaReal)
 heroi1.adicionaSuperPoder(superPoder1)
 // heroi1.adicionaSuperPoder(superPoder2)
 heroi1.adicionaSuperPoder(superPoder3)
-// heroi1.adicionaSuperPoder(superPoder4)
+heroi1.adicionaSuperPoder(superPoder4)
 vilao1.adicionaSuperPoder(superPoder5)
 
 console.log(heroi1.poderTotal())
