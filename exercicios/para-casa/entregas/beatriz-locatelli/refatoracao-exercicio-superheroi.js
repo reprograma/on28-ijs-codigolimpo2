@@ -51,7 +51,7 @@ class Personagem {
 
     poderTotal() {
         const totalPoder = this.#poderes.reduce((total, superPoder) => total + superPoder.categoriaDoPoder, 0);
-        return totalPoder
+        return totalPoder + "" +   ` O poder total do personagem ${this.#nome} é ${totalPoder}!`
     }
 }
 
@@ -62,7 +62,7 @@ class SuperHeroi extends Personagem {
 
     poderTotal() {
         const totalPoder = super.poderTotal() + (super.poderTotal() * 0.01)
-        return (`O poder total do personagem ${this.getNome} é ${totalPoder}!`)
+        return totalPoder
     }
 }
 
@@ -70,11 +70,6 @@ class Vilao extends Personagem {
     constructor(nome, nomeVidaReal, tempoDePrisao) {
         super(nome, nomeVidaReal)
         this.tempoDePrisao = tempoDePrisao
-    }
-
-    poderTotal() {
-        const totalPoder = super.poderTotal()
-        return (`O poder total do personagem ${this.getNome} é ${totalPoder}!`)
     }
 }
 
