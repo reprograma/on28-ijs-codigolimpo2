@@ -22,12 +22,6 @@ class Locacao{
       }
     }
 
-  verificarFidelidade(dias){
-    if(dias > 2){
-      this.pontosDeFidelidade++
-    }
-  }
-
   exibirPontosDeFidelidade(){
 
   }
