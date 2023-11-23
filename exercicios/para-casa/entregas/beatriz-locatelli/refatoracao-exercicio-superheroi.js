@@ -34,24 +34,41 @@ class Personagem {
         return this.#nomeVidaReal
     }
 
+    validaSuperPoder(superPoder) {
+        if (!(superPoder instanceof SuperPoder)) {
+            throw ('SuperPoder não identificado.');
+        }
+    }
+
+    ultrapassarLimiteDePoderes() {
+        return this.#poderes.length >= 5
+    }
+
+    poderJaAdicionado(superPoder) {
+        return this.#poderes.some((poder) => poder.nomeDoPoder === superPoder.nomeDoPoder)
+    }
+
+    //Conceito SOLID:
+    //Aplicado o princípio de responsabilidade única;
     adicionaSuperPoder(superPoder) {
 
-        if (!(superPoder instanceof SuperPoder)) {
-            throw ('superPoder não é uma instância de SuperPoder');
+        this.validaSuperPoder(superPoder);
+
+        if (this.ultrapassarLimiteDePoderes()) {
+            throw (`Não foi possível adicionar mais poderes. Máximo de 5 poderes permitidos.`);
         }
-        if (this.#poderes.length > 3) {
-            throw ('Não é possível adicionar mais poderes á esse personagem.');
+
+        if (this.poderJaAdicionado(superPoder)) {
+            throw `O poder "${superPoder.nomeDoPoder}" já foi adicionado ao personagem ${this.#nome}`;
         }
-        if (this.#poderes.some((poder) => poder.nomeDoPoder === superPoder.nomeDoPoder)) {
-            throw (`O poder "${superPoder.nomeDoPoder}" já foi adicionado ao personagem ${this.#nome}`)
-        }
-        this.#poderes.push(superPoder)
-        console.log(`Poder "${superPoder.nomeDoPoder}", de categoria ${superPoder.categoriaDoPoder}, adicionado ao personagem ${this.#nome}!`)
+
+        this.#poderes.push(superPoder);
+        return `Poder "${superPoder.nomeDoPoder}", de categoria ${superPoder.categoriaDoPoder}, adicionado ao personagem ${this.#nome}!`;
     }
 
     poderTotal() {
         const totalPoder = this.#poderes.reduce((total, superPoder) => total + superPoder.categoriaDoPoder, 0);
-        return totalPoder + "" +   ` O poder total do personagem ${this.#nome} é ${totalPoder}!`
+        return totalPoder + "" + ` O poder total do personagem ${this.#nome} é ${totalPoder}!`
     }
 }
 
@@ -81,13 +98,26 @@ class Vilao extends Personagem {
 
 class Confronto {
 
-    lutar(heroi, vilao) {
-        let resultadoHeroiVencedor = heroi.poderTotal() > vilao.poderTotal()
-        let resultadoEmpate = heroi.poderTotal() == vilao.poderTotal()
-
-        if (!(heroi instanceof SuperHeroi && vilao instanceof Vilao)) {
-            return "Personagens não econtrados."
+    validaSuperHeroi(heroi) {
+        if (!(heroi instanceof SuperHeroi)) {
+            throw ('Heroi não identificado.');
         }
+    }
+
+    validaVilao(vilao) {
+        if (!(vilao instanceof Vilao)) {
+            throw ('Vilao não identificado.');
+        }
+    }
+
+    lutar(heroi, vilao) {
+
+        this.validaSuperHeroi(heroi);
+        this.validaVilao(vilao);
+
+        const resultadoHeroiVencedor = heroi.poderTotal() > vilao.poderTotal()
+        const resultadoEmpate = heroi.poderTotal() == vilao.poderTotal()
+
         return resultadoEmpate
             ? "Resultado do confronto: empate"
             : `Resultado do confronto: O personagem ${resultadoHeroiVencedor ? heroi.nome : vilao.nome
@@ -108,11 +138,11 @@ const vilao1 = new Vilao("Duende-Verde", "Norman Osbourne", 5)
 console.log(heroi1.nome)
 console.log(heroi1.nomeVidaReal)
 
-heroi1.adicionaSuperPoder(superPoder1)
-// heroi1.adicionaSuperPoder(superPoder2)
-heroi1.adicionaSuperPoder(superPoder3)
-heroi1.adicionaSuperPoder(superPoder4)
-vilao1.adicionaSuperPoder(superPoder5)
+console.log(heroi1.adicionaSuperPoder(superPoder1))
+// console.log(heroi1.adicionaSuperPoder(superPoder2))
+console.log(heroi1.adicionaSuperPoder(superPoder3))
+console.log(heroi1.adicionaSuperPoder(superPoder4))
+console.log(vilao1.adicionaSuperPoder(superPoder5))
 
 console.log(heroi1.poderTotal())
 console.log(vilao1.poderTotal())
