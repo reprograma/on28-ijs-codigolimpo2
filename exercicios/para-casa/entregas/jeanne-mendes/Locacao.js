@@ -26,10 +26,6 @@ class Locacao{
 
   }
 
-  exibirCarrinhoDeFilmes(){
-
-  }
-
   exibirTotalDaLocacao(){
     
   }
