@@ -62,7 +62,7 @@ class SuperHeroi extends Personagem {
 
     poderTotal() {
         const totalPoder = super.poderTotal() + (super.poderTotal() * 0.01)
-        return (`O poder total do personagem ${this.nome} é ${totalPoder}!`)
+        return (`O poder total do personagem ${this.getNome} é ${totalPoder}!`)
     }
 }
 
@@ -74,7 +74,7 @@ class Vilao extends Personagem {
 
     poderTotal() {
         const totalPoder = super.poderTotal()
-        return (`O poder total do personagem ${this.nome} é ${totalPoder}!`)
+        return (`O poder total do personagem ${this.getNome} é ${totalPoder}!`)
     }
 }
 
@@ -86,6 +86,7 @@ class Vilao extends Personagem {
 
 class Confronto {
 
+
     lutar(heroi, vilao) {
         let resultadoHeroiVencedor = heroi.poderTotal() > vilao.poderTotal()
         let resultadoEmpate = heroi.poderTotal() == vilao.poderTotal()
@@ -93,13 +94,10 @@ class Confronto {
         if (!(heroi instanceof SuperHeroi && vilao instanceof Vilao)) {
             return "Personagens não econtrados."
         }
-        try {
-            return resultadoHeroiVencedor == true ? `Resultado do confronto: O personagem ${heroi.nome} venceu!`
-                : `Resultado do confronto: O personagem ${vilao.nome} venceu!`
-        } catch {
-            return resultadoEmpate == true ? `Resultado do confronto: empate`
-                : ""
-        }
+        return resultadoEmpate
+            ? "Resultado do confronto: empate"
+            : `Resultado do confronto: O personagem ${resultadoHeroiVencedor ? heroi.nome : vilao.nome
+            } venceu!`;
     }
 }
 
